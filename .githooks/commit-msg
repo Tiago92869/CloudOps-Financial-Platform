@@ -1,0 +1,22 @@
+#!/bin/sh
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG="$(head -n1 "$COMMIT_MSG_FILE")"
+
+REGEX='^(\[CSP-[0-9]+\])+ : .+$'
+
+if ! echo "$COMMIT_MSG" | grep -Eq "$REGEX"; then
+  echo "Invalid commit message."
+  echo ""
+  echo "Received:"
+  echo "$COMMIT_MSG"
+  echo ""
+  echo "Expected format:"
+  echo "[CSP-XX] : message"
+  echo "or"
+  echo "[CSP-XX][CSP-YY] : message"
+  echo ""
+  echo "Example:"
+  echo "[CSP-12] : add operation creation flow"
+  exit 1
+fi

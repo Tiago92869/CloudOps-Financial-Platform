@@ -1,0 +1,48 @@
+name: Commit Message Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+
+jobs:
+  validate-commit-messages:
+    name: Validate commit messages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        shell: bash
+        run: |
+          REGEX='^(\[CSP-[0-9]+\])+\s:\s.+$'
+
+          echo "Validating commits in this pull request..."
+
+          BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+
+          INVALID=0
+
+          while read -r COMMIT_MSG; do
+            echo "Checking: $COMMIT_MSG"
+
+            if [[ ! "$COMMIT_MSG" =~ $REGEX ]]; then
+              echo "Invalid commit message: $COMMIT_MSG"
+              INVALID=1
+            fi
+          done < <(git log --format=%s "$BASE_SHA..$HEAD_SHA")
+
+          if [[ "$INVALID" -eq 1 ]]; then
+            echo ""
+            echo "Commit messages must follow this format:"
+            echo "[CSP-XX] : message"
+            echo "or"
+            echo "[CSP-XX][CSP-YY] : message"
+            exit 1
+          fi
+
+          echo "All commit messages are valid."
