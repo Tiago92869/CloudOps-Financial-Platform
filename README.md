@@ -920,3 +920,4 @@ The following sections will be added later as the project becomes more detailed:
 ## 15. Initial Architecture Statement
 
 CloudOps Financial Platform is a full-stack, cloud-native, event-driven platform built with Angular and Java Spring Boot microservices. It uses Keycloak for authentication, Kafka for asynchronous service communication, PostgreSQL for transactional business data, Elasticsearch for audit and log search, Fluentd for log collection, and Kibana for observability dashboards. The platform is containerized with Docker, deployable to Kubernetes and OpenShift, and integrated with GitHub and Jenkins for CI/CD.
+
