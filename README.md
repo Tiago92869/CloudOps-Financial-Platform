@@ -921,3 +921,36 @@ The following sections will be added later as the project becomes more detailed:
 
 CloudOps Financial Platform is a full-stack, cloud-native, event-driven platform built with Angular and Java Spring Boot microservices. It uses Keycloak for authentication, Kafka for asynchronous service communication, PostgreSQL for transactional business data, Elasticsearch for audit and log search, Fluentd for log collection, and Kibana for observability dashboards. The platform is containerized with Docker, deployable to Kubernetes and OpenShift, and integrated with GitHub and Jenkins for CI/CD.
 
+---
+
+## 16. GitHub Workflow
+
+This project uses a protected `main` branch. Changes should not be committed directly to `main`.
+
+To contribute, create a new branch:
+
+```bash
+git checkout -b feature/CSP-12-short-description
+```
+
+All commit messages must follow this format:
+
+```text
+[CSP-XX] : commit message
+```
+
+Examples:
+
+```text
+[CSP-12] : add operation creation flow
+[CSP-15][CSP-16] : update authentication setup
+```
+
+Then push the branch and open a pull request:
+
+```bash
+git push origin feature/CSP-12-short-description
+```
+
+Pull requests include a default template and must pass the repository checks before they can be merged.
+
